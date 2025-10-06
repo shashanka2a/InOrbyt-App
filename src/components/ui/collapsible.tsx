@@ -1,6 +1,6 @@
 "use client";
 
-import * as CollapsiblePrimitive from "@radix-ui/react-collapsible@1.1.3";
+import * as CollapsiblePrimitive from " import * as CollapsiblePrimitive from "@radix-ui/react-collapsible@1.1.3";.Value -replace '@[\d.]+";, '' ";
 
 function Collapsible({
   ...props

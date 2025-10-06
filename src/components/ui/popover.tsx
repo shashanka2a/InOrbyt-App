@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import * as PopoverPrimitive from "@radix-ui/react-popover@1.1.6";
+import * as PopoverPrimitive from " import * as PopoverPrimitive from "@radix-ui/react-popover@1.1.6";.Value -replace '@[\d.]+";, '' ";
 
 import { cn } from "./utils";
 

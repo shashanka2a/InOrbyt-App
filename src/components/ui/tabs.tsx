@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import * as TabsPrimitive from "@radix-ui/react-tabs@1.1.3";
+import * as TabsPrimitive from " import * as TabsPrimitive from "@radix-ui/react-tabs@1.1.3";.Value -replace '@[\d.]+";, '' ";
 
 import { cn } from "./utils";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import * as ProgressPrimitive from "@radix-ui/react-progress@1.1.2";
+import * as ProgressPrimitive from " import * as ProgressPrimitive from "@radix-ui/react-progress@1.1.2";.Value -replace '@[\d.]+";, '' ";
 
 import { cn } from "./utils";
 

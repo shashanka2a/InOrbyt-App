@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import * as SeparatorPrimitive from "@radix-ui/react-separator@1.1.2";
+import * as SeparatorPrimitive from " import * as SeparatorPrimitive from "@radix-ui/react-separator@1.1.2";.Value -replace '@[\d.]+";, '' ";
 
 import { cn } from "./utils";
 
