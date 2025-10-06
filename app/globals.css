@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+/* You can import additional layer files if needed */
+/* @import "./tokens.css"; */
+
+html, body {
+  height: 100%;
+}
+
+body {
+  color: white;
+  background: #0a0e1a;
+}
+
+
