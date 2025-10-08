@@ -384,12 +384,12 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
                 </div>
 
                 {/* Right - Live Preview */}
-                <div className="rounded-3xl p-8 shadow-lg" style={{ backgroundColor: cardColor }}>
+                <div className="rounded-3xl p-8 shadow-lg bg-white border border-[#0a0e1a]/10">
                   <h3 className="text-[#0a0e1a] mb-6" style={{ fontSize: '18px', fontWeight: 600 }}>
                     Token Preview
                   </h3>
                   
-                  <div className="bg-white/90 backdrop-blur-lg rounded-2xl p-6 border border-[#0a0e1a]/10 shadow-lg">
+                  <div className="rounded-2xl p-6 border border-[#0a0e1a]/10 shadow-lg" style={{ backgroundColor: cardColor }}>
                     {/* Token Image */}
                     <div className="w-24 h-24 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[#005257] to-[#005257]/70 overflow-hidden flex items-center justify-center">
                       {formData.tokenImage ? (
@@ -410,13 +410,7 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
                     </div>
 
                     {/* Stats */}
-                    <div className="grid grid-cols-2 gap-4 mb-6">
-                      <div className="bg-[#0a0e1a]/5 rounded-xl p-3 text-center">
-                        <p className="text-[#0a0e1a]/70" style={{ fontSize: '12px' }}>Supply</p>
-                        <p className="text-[#0a0e1a]" style={{ fontSize: '16px', fontWeight: 600 }}>
-                          {formData.totalSupply ? Number(formData.totalSupply).toLocaleString() : '—'}
-                        </p>
-                      </div>
+                    <div className="grid grid-cols-1 gap-4 mb-6">
                       <div className="bg-[#0a0e1a]/5 rounded-xl p-3 text-center">
                         <p className="text-[#0a0e1a]/70" style={{ fontSize: '12px' }}>Price</p>
                         <p className="text-[#0a0e1a]" style={{ fontSize: '16px', fontWeight: 600 }}>
@@ -549,13 +543,7 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
                       Edit
                     </button>
                   </div>
-                  <div className="grid md:grid-cols-3 gap-6">
-                    <div>
-                      <p className="text-[#0a0e1a]/50 mb-1" style={{ fontSize: '12px' }}>Total Supply</p>
-                      <p className="text-[#0a0e1a]" style={{ fontSize: '20px', fontWeight: 600 }}>
-                        {Number(formData.totalSupply).toLocaleString()}
-                      </p>
-                    </div>
+                  <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <p className="text-[#0a0e1a]/50 mb-1" style={{ fontSize: '12px' }}>Starting Price</p>
                       <p className="text-[#0a0e1a]" style={{ fontSize: '20px', fontWeight: 600 }}>
