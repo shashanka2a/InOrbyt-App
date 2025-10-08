@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { X, ArrowLeft, ShoppingCart, Sparkles, TrendingUp, Users, Lock, Check } from 'lucide-react';
+import { X, ArrowLeft, ShoppingCart, Sparkles, TrendingUp, Users, Lock, Check, Share } from 'lucide-react';
 import type { UserData } from './PWAContainer';
 
 interface FanProfileViewProps {
@@ -54,9 +54,18 @@ export function FanProfileView({ userData, onClose }: FanProfileViewProps) {
             <ArrowLeft className="w-5 h-5 md:w-6 md:h-6 text-[#f9f4e1]" />
           </button>
           <h1 className="font-lora text-[#f9f4e1]" style={{ fontSize: 'clamp(16px, 4vw, 20px)', fontWeight: 700 }}>
-            Creator Profile
+            InOrbyt Creator Profile Preview
           </h1>
-          <div className="w-9 md:w-10" />
+          <button
+            onClick={() => {
+              const profileUrl = `https://inorbyt.io/@${userData.username}`;
+              navigator.clipboard.writeText(profileUrl);
+              // You could add a toast notification here
+            }}
+            className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+          >
+            <Share className="w-5 h-5 md:w-6 md:h-6 text-[#f9f4e1]" />
+          </button>
         </div>
       </div>
 
@@ -93,33 +102,6 @@ export function FanProfileView({ userData, onClose }: FanProfileViewProps) {
                 {userData.bio || 'Creator bio will appear here.'}
               </p>
 
-              {/* Stats */}
-              <div className="flex justify-center sm:justify-start gap-6 md:gap-8 mb-6">
-                <div>
-                  <p className="text-[#f9f4e1]" style={{ fontSize: 'clamp(20px, 5vw, 24px)', fontWeight: 700 }}>
-                    {holders}
-                  </p>
-                  <p className="text-[#f9f4e1]/60" style={{ fontSize: 'clamp(12px, 3vw, 14px)' }}>
-                    Holders
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[#f9f4e1]" style={{ fontSize: 'clamp(20px, 5vw, 24px)', fontWeight: 700 }}>
-                    {totalSupply >= 1000000 ? `${(totalSupply / 1000000).toFixed(1)}M` : totalSupply.toLocaleString()}
-                  </p>
-                  <p className="text-[#f9f4e1]/60" style={{ fontSize: 'clamp(12px, 3vw, 14px)' }}>
-                    Supply
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[#f9f4e1]" style={{ fontSize: 'clamp(20px, 5vw, 24px)', fontWeight: 700 }}>
-                    ${currentPrice}
-                  </p>
-                  <p className="text-[#f9f4e1]/60" style={{ fontSize: 'clamp(12px, 3vw, 14px)' }}>
-                    Floor Price
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </motion.div>
@@ -133,7 +115,7 @@ export function FanProfileView({ userData, onClose }: FanProfileViewProps) {
         >
           <div className="flex flex-col gap-6 md:gap-8 items-center">
             {/* Token Image */}
-            <div className="w-24 h-24 md:w-32 md:h-32 rounded-xl md:rounded-2xl bg-white/10 backdrop-blur-lg overflow-hidden flex items-center justify-center flex-shrink-0 border-4 border-white/20">
+            <div className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-white/10 backdrop-blur-lg overflow-hidden flex items-center justify-center flex-shrink-0 border-4 border-white/20">
               {userData.tokenImage ? (
                 <img src={userData.tokenImage} alt={userData.tokenName} className="w-full h-full object-cover" />
               ) : (
@@ -150,19 +132,13 @@ export function FanProfileView({ userData, onClose }: FanProfileViewProps) {
                 ${userData.tokenSymbol || 'SYMBOL'}
               </p>
 
-              <div className="grid grid-cols-3 gap-3 md:gap-6 mb-6">
+              <div className="grid grid-cols-2 gap-3 md:gap-6 mb-6">
                 <div className="bg-white/10 rounded-lg md:rounded-xl p-3 md:p-4 backdrop-blur-sm">
                   <p className="text-white/70 mb-1" style={{ fontSize: 'clamp(10px, 2.5vw, 12px)' }}>Current Price</p>
                   <p className="text-white" style={{ fontSize: 'clamp(16px, 4vw, 20px)', fontWeight: 700 }}>${currentPrice}</p>
                   <span className="text-green-400" style={{ fontSize: 'clamp(10px, 2.5vw, 12px)', fontWeight: 600 }}>
                     {priceChange}
                   </span>
-                </div>
-                <div className="bg-white/10 rounded-lg md:rounded-xl p-3 md:p-4 backdrop-blur-sm">
-                  <p className="text-white/70 mb-1" style={{ fontSize: 'clamp(10px, 2.5vw, 12px)' }}>Total Supply</p>
-                  <p className="text-white" style={{ fontSize: 'clamp(16px, 4vw, 20px)', fontWeight: 700 }}>
-                    {totalSupply >= 1000000 ? `${(totalSupply / 1000000).toFixed(1)}M` : totalSupply.toLocaleString()}
-                  </p>
                 </div>
                 <div className="bg-white/10 rounded-lg md:rounded-xl p-3 md:p-4 backdrop-blur-sm">
                   <p className="text-white/70 mb-1" style={{ fontSize: 'clamp(10px, 2.5vw, 12px)' }}>Holders</p>
@@ -178,7 +154,7 @@ export function FanProfileView({ userData, onClose }: FanProfileViewProps) {
               style={{ fontSize: 'clamp(15px, 3.5vw, 17px)', fontWeight: 600 }}
             >
               <ShoppingCart className="w-4 h-4 md:w-5 md:h-5" />
-              Buy Tokens
+              Buy {userData.tokenSymbol || 'TOKENS'}
             </motion.button>
           </div>
         </motion.div>

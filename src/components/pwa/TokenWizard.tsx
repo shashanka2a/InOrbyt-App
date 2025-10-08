@@ -13,6 +13,7 @@ interface TokenWizardProps {
 
 export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenWizardProps) {
   const [currentStep, setCurrentStep] = useState(0);
+  const [cardColor, setCardColor] = useState('#faf7ec');
   const [formData, setFormData] = useState({
     tokenName: userData.tokenName || '',
     tokenSymbol: userData.tokenSymbol || '',
@@ -21,9 +22,9 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
     startingPrice: userData.startingPrice || '',
     maxTokensPerFan: userData.maxTokensPerFan || '',
     allowFutureMinting: userData.allowFutureMinting || false,
-    exclusiveContent: userData.exclusiveContent,
-    communityAccess: userData.communityAccess,
-    earlyAccess: userData.earlyAccess,
+    exclusiveContent: userData.exclusiveContent !== undefined ? userData.exclusiveContent : true,
+    communityAccess: userData.communityAccess !== undefined ? userData.communityAccess : true,
+    earlyAccess: userData.earlyAccess !== undefined ? userData.earlyAccess : true,
     votingRights: userData.votingRights,
   });
 
@@ -178,15 +179,20 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
                     <label className="block text-[#0a0e1a] mb-2" style={{ fontSize: '15px', fontWeight: 600 }}>
                       Token Symbol
                     </label>
-                    <input
-                      type="text"
-                      value={formData.tokenSymbol}
-                      onChange={(e) => handleInputChange('tokenSymbol', e.target.value.toUpperCase())}
-                      placeholder="e.g. SARAH"
-                      maxLength={6}
-                      className="w-full px-4 py-3 bg-[#faf7ec] border-2 border-[#0a0e1a]/10 rounded-xl text-[#0a0e1a] placeholder:text-[#0a0e1a]/40 focus:border-[#005257] focus:outline-none transition-colors uppercase"
-                      style={{ fontSize: '16px' }}
-                    />
+                    <div className="relative">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0a0e1a]/40" style={{ fontSize: '16px', fontWeight: 600 }}>
+                        $
+                      </span>
+                      <input
+                        type="text"
+                        value={formData.tokenSymbol}
+                        onChange={(e) => handleInputChange('tokenSymbol', e.target.value.toUpperCase())}
+                        placeholder="SIMBA"
+                        maxLength={6}
+                        className="w-full pl-8 pr-4 py-3 bg-[#faf7ec] border-2 border-[#0a0e1a]/10 rounded-xl text-[#0a0e1a] placeholder:text-[#0a0e1a]/40 focus:border-[#005257] focus:outline-none transition-colors uppercase"
+                        style={{ fontSize: '16px' }}
+                      />
+                    </div>
                     <p className="text-[#0a0e1a]/50 mt-2" style={{ fontSize: '12px' }}>
                       3-6 characters, all caps
                     </p>
@@ -199,15 +205,16 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
                     Token Image
                   </label>
                   <div className="relative">
-                    <div className="w-full aspect-square rounded-2xl bg-gradient-to-br from-[#005257] to-[#005257]/70 border-4 border-[#0a0e1a]/10 overflow-hidden flex items-center justify-center">
+                    <div className="w-full aspect-square rounded-full bg-gradient-to-br from-[#005257] to-[#005257]/70 border-4 border-[#0a0e1a]/10 overflow-hidden flex items-center justify-center">
                       {formData.tokenImage ? (
                         <img
                           src={formData.tokenImage}
                           alt="Token preview"
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover max-w-full max-h-full"
+                          style={{ maxWidth: '500px', maxHeight: '500px' }}
                         />
                       ) : (
-                        <div className="text-center p-6">
+                        <div className="text-center p-8">
                           <Upload className="w-12 h-12 text-white/40 mx-auto mb-3" />
                           <p className="text-white/60" style={{ fontSize: '14px' }}>
                             Upload or AI generate
@@ -384,13 +391,46 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
                   <h2 className="font-lora text-[#0a0e1a] mb-2" style={{ fontSize: '28px', fontWeight: 700 }}>
                     Fan Perks
                   </h2>
-                  <p className="text-[#0a0e1a]/60 mb-8" style={{ fontSize: '16px' }}>
+                  <p className="text-[#0a0e1a]/60 mb-4" style={{ fontSize: '16px' }}>
                     Choose what holders get access to
                   </p>
+                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-8">
+                    <p className="text-blue-700" style={{ fontSize: '14px' }}>
+                      💡 <strong>Tip:</strong> You can customize these perks and add new ones later in your dashboard.
+                    </p>
+                  </div>
+
+                  {/* Card Color Customization */}
+                  <div className="mb-6">
+                    <label className="block text-[#0a0e1a] mb-3" style={{ fontSize: '15px', fontWeight: 600 }}>
+                      Card Color
+                    </label>
+                    <div className="flex gap-3">
+                      {[
+                        { name: 'Default', color: '#faf7ec' },
+                        { name: 'Blue', color: '#e6f3ff' },
+                        { name: 'Green', color: '#f0f9f0' },
+                        { name: 'Purple', color: '#f3e8ff' },
+                        { name: 'Orange', color: '#fff4e6' },
+                      ].map((theme) => (
+                        <button
+                          key={theme.name}
+                          onClick={() => setCardColor(theme.color)}
+                          className={`w-12 h-12 rounded-xl border-2 transition-all ${
+                            cardColor === theme.color 
+                              ? 'border-[#005257] scale-110' 
+                              : 'border-gray-200 hover:border-gray-300'
+                          }`}
+                          style={{ backgroundColor: theme.color }}
+                          title={theme.name}
+                        />
+                      ))}
+                    </div>
+                  </div>
 
                   <div className="space-y-4">
                     {/* Exclusive Content */}
-                    <div className="bg-[#faf7ec] rounded-xl p-5 flex items-start justify-between">
+                    <div className="rounded-xl p-5 flex items-start justify-between" style={{ backgroundColor: cardColor }}>
                       <div className="flex-1">
                         <p className="text-[#0a0e1a] mb-1" style={{ fontSize: '16px', fontWeight: 600 }}>
                           Exclusive Content
@@ -406,7 +446,7 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
                     </div>
 
                     {/* Community Access */}
-                    <div className="bg-[#faf7ec] rounded-xl p-5 flex items-start justify-between">
+                    <div className="rounded-xl p-5 flex items-start justify-between" style={{ backgroundColor: cardColor }}>
                       <div className="flex-1">
                         <p className="text-[#0a0e1a] mb-1" style={{ fontSize: '16px', fontWeight: 600 }}>
                           Community Access
@@ -422,7 +462,7 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
                     </div>
 
                     {/* Early Access */}
-                    <div className="bg-[#faf7ec] rounded-xl p-5 flex items-start justify-between">
+                    <div className="rounded-xl p-5 flex items-start justify-between" style={{ backgroundColor: cardColor }}>
                       <div className="flex-1">
                         <p className="text-[#0a0e1a] mb-1" style={{ fontSize: '16px', fontWeight: 600 }}>
                           Early Access
@@ -438,7 +478,7 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
                     </div>
 
                     {/* Voting Rights */}
-                    <div className="bg-[#faf7ec] rounded-xl p-5 flex items-start justify-between opacity-50">
+                    <div className="rounded-xl p-5 flex items-start justify-between opacity-50" style={{ backgroundColor: cardColor }}>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
                           <p className="text-[#0a0e1a]" style={{ fontSize: '16px', fontWeight: 600 }}>

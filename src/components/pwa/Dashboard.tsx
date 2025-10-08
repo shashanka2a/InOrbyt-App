@@ -506,7 +506,7 @@ export function Dashboard({ userData, updateUserData }: DashboardProps) {
                 Your Token
               </h3>
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-[#005257] to-[#005257]/70 overflow-hidden flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#005257] to-[#005257]/70 overflow-hidden flex items-center justify-center">
                   {userData.tokenImage ? (
                     <img src={userData.tokenImage} alt={userData.tokenName} className="w-full h-full object-cover" />
                   ) : (

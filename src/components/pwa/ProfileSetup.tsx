@@ -41,7 +41,8 @@ export function ProfileSetup({ onNext, onBack, userData, updateUserData }: Profi
   };
 
   return (
-    <div className="min-h-screen bg-[#faf7ec]">
+    <TooltipProvider>
+      <div className="min-h-screen bg-[#faf7ec]">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -68,15 +69,16 @@ export function ProfileSetup({ onNext, onBack, userData, updateUserData }: Profi
             className="flex flex-col items-center justify-center"
           >
             <div className="relative">
-              <div className="w-full max-w-[500px] aspect-square rounded-3xl bg-gradient-to-br from-[#005257] to-[#005257]/70 border-4 border-white shadow-2xl overflow-hidden flex items-center justify-center">
+              <div className="w-full max-w-[500px] aspect-square rounded-full bg-gradient-to-br from-[#005257] to-[#005257]/70 border-4 border-white shadow-2xl overflow-hidden flex items-center justify-center">
                 {avatarPreview ? (
                   <img
                     src={avatarPreview}
                     alt="Profile preview"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover max-w-full max-h-full"
+                    style={{ maxWidth: '500px', maxHeight: '500px' }}
                   />
                 ) : (
-                  <div className="text-center">
+                  <div className="text-center p-8">
                     <Camera className="w-24 h-24 text-white/40 mx-auto mb-4" />
                     <p className="text-white/60" style={{ fontSize: '18px' }}>
                       Upload your avatar
@@ -120,20 +122,18 @@ export function ProfileSetup({ onNext, onBack, userData, updateUserData }: Profi
                   <label className="text-[#0a0e1a]" style={{ fontSize: '15px', fontWeight: 600 }}>
                     Display Name
                   </label>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button className="text-[#0a0e1a]/40 hover:text-[#0a0e1a]/60">
-                          <Info className="w-4 h-4" />
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p className="max-w-xs" style={{ fontSize: '13px' }}>
-                          Your public name that will be displayed to your community
-                        </p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button className="text-[#0a0e1a]/40 hover:text-[#0a0e1a]/60">
+                        <Info className="w-4 h-4" />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="max-w-xs" style={{ fontSize: '13px' }}>
+                        Your public name that will be displayed to your community
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
                 <input
                   type="text"
@@ -151,20 +151,18 @@ export function ProfileSetup({ onNext, onBack, userData, updateUserData }: Profi
                   <label className="text-[#0a0e1a]" style={{ fontSize: '15px', fontWeight: 600 }}>
                     Username
                   </label>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button className="text-[#0a0e1a]/40 hover:text-[#0a0e1a]/60">
-                          <Info className="w-4 h-4" />
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p className="max-w-xs" style={{ fontSize: '13px' }}>
-                          Your unique handle for your InOrbyt profile URL
-                        </p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button className="text-[#0a0e1a]/40 hover:text-[#0a0e1a]/60">
+                        <Info className="w-4 h-4" />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="max-w-xs" style={{ fontSize: '13px' }}>
+                        Your unique handle for your InOrbyt profile URL
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0a0e1a]/40" style={{ fontSize: '16px' }}>
@@ -192,20 +190,18 @@ export function ProfileSetup({ onNext, onBack, userData, updateUserData }: Profi
                   <label className="text-[#0a0e1a]" style={{ fontSize: '15px', fontWeight: 600 }}>
                     Bio
                   </label>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <button className="text-[#0a0e1a]/40 hover:text-[#0a0e1a]/60">
-                          <Info className="w-4 h-4" />
-                        </button>
-                      </TooltipTrigger>
-                      <TooltipContent>
-                        <p className="max-w-xs" style={{ fontSize: '13px' }}>
-                          Tell your community what you create and what makes you unique
-                        </p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <button className="text-[#0a0e1a]/40 hover:text-[#0a0e1a]/60">
+                        <Info className="w-4 h-4" />
+                      </button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p className="max-w-xs" style={{ fontSize: '13px' }}>
+                        Tell your community what you create and what makes you unique
+                      </p>
+                    </TooltipContent>
+                  </Tooltip>
                 </div>
                 <textarea
                   value={bio}
@@ -246,5 +242,6 @@ export function ProfileSetup({ onNext, onBack, userData, updateUserData }: Profi
         </div>
       </div>
     </div>
+    </TooltipProvider>
   );
 }
