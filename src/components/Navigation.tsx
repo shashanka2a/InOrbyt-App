@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'motion/react';
+import { Logo } from './ui/Logo';
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -57,10 +58,9 @@ export function Navigation() {
               href="#"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="font-lora text-[#f9f4e1] tracking-tight relative group" 
-              style={{ fontSize: '24px', fontWeight: 700 }}
+              className="relative group"
             >
-              InOrbyt.io
+              <Logo variant="white" size="lg" />
               <motion.div 
                 className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-orange-500 to-orange-600 origin-left"
                 initial={{ scaleX: 0 }}

@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Twitter, Github, MessageCircle, Mail } from 'lucide-react';
+import { Logo } from './ui/Logo';
 
 export function Footer() {
   return (
@@ -8,8 +9,8 @@ export function Footer() {
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div>
-            <div className="font-lora text-[#f9f4e1] mb-4" style={{ fontSize: '24px', fontWeight: 700 }}>
-              InOrbyt.io
+            <div className="mb-4">
+              <Logo variant="white" size="lg" />
             </div>
             <p className="text-[#f9f4e1]/70 mb-6" style={{ fontSize: '14px' }}>
               Creator-owned.<br />Fan-powered.

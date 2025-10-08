@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Sparkles, Users, Zap } from 'lucide-react';
+import { Logo } from '../ui/Logo';
 
 interface WelcomeProps {
   onNext: () => void;
@@ -35,6 +36,14 @@ export function Welcome({ onNext, onLearnMore }: WelcomeProps) {
       >
         {/* Hero Section */}
         <div className="text-center mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="mb-6"
+          >
+            <Logo variant="default" size="xl" />
+          </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}

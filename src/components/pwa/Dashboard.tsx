@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
+import { Logo } from '../ui/Logo';
 import {
   LayoutDashboard,
   Gift,
@@ -135,8 +136,8 @@ export function Dashboard({ userData, updateUserData }: DashboardProps) {
         style={{ borderColor }}
       >
         {/* Logo */}
-        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#ea532a] to-orange-600 flex items-center justify-center mb-4">
-          <span className="text-white" style={{ fontSize: '20px', fontWeight: 700 }}>I</span>
+        <div className="mb-4">
+          <Logo variant="white" size="md" showText={false} />
         </div>
 
         {/* Navigation Icons */}

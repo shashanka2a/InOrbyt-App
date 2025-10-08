@@ -18,9 +18,9 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
     tokenName: userData.tokenName || '',
     tokenSymbol: userData.tokenSymbol || '',
     tokenImage: userData.tokenImage || null,
-    totalSupply: userData.totalSupply || '',
-    startingPrice: userData.startingPrice || '',
-    maxTokensPerFan: userData.maxTokensPerFan || '',
+    totalSupply: userData.totalSupply || '1000000',
+    startingPrice: userData.startingPrice || '0.10',
+    maxTokensPerFan: userData.maxTokensPerFan || '1000',
     allowFutureMinting: userData.allowFutureMinting || false,
     exclusiveContent: userData.exclusiveContent !== undefined ? userData.exclusiveContent : true,
     communityAccess: userData.communityAccess !== undefined ? userData.communityAccess : true,
@@ -48,10 +48,8 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
       case 0:
         return formData.tokenName && formData.tokenSymbol;
       case 1:
-        return formData.totalSupply && formData.startingPrice;
-      case 2:
         return true;
-      case 3:
+      case 2:
         return true;
       default:
         return false;
@@ -59,7 +57,7 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
   };
 
   const handleNext = () => {
-    if (currentStep < 3) {
+    if (currentStep < 2) {
       setCurrentStep(currentStep + 1);
     } else {
       // Save all token data before moving to dashboard
@@ -261,124 +259,9 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
           )}
 
           {/* Step 2: Token Supply & Price */}
+
+          {/* Step 2: Fan Perks */}
           {currentStep === 1 && (
-            <motion.div
-              key="step1"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              className="bg-white rounded-3xl p-8 shadow-lg border border-[#0a0e1a]/10"
-            >
-              <h2 className="font-lora text-[#0a0e1a] mb-2" style={{ fontSize: '28px', fontWeight: 700 }}>
-                Token Economics
-              </h2>
-              <p className="text-[#0a0e1a]/60 mb-8" style={{ fontSize: '16px' }}>
-                Set your token supply and pricing
-              </p>
-
-              <div className="space-y-6 mb-8">
-                <div className="grid md:grid-cols-2 gap-6">
-                  {/* Total Supply */}
-                  <div>
-                    <label className="block text-[#0a0e1a] mb-2" style={{ fontSize: '15px', fontWeight: 600 }}>
-                      Total Supply
-                    </label>
-                    <input
-                      type="number"
-                      value={formData.totalSupply}
-                      onChange={(e) => handleInputChange('totalSupply', e.target.value)}
-                      placeholder="e.g. 1000000"
-                      className="w-full px-4 py-3 bg-[#faf7ec] border-2 border-[#0a0e1a]/10 rounded-xl text-[#0a0e1a] placeholder:text-[#0a0e1a]/40 focus:border-[#005257] focus:outline-none transition-colors"
-                      style={{ fontSize: '16px' }}
-                    />
-                    <p className="text-[#0a0e1a]/50 mt-2" style={{ fontSize: '12px' }}>
-                      Total number of tokens to create
-                    </p>
-                  </div>
-
-                  {/* Starting Price */}
-                  <div>
-                    <label className="block text-[#0a0e1a] mb-2" style={{ fontSize: '15px', fontWeight: 600 }}>
-                      Starting Price (USD)
-                    </label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      value={formData.startingPrice}
-                      onChange={(e) => handleInputChange('startingPrice', e.target.value)}
-                      placeholder="e.g. 0.10"
-                      className="w-full px-4 py-3 bg-[#faf7ec] border-2 border-[#0a0e1a]/10 rounded-xl text-[#0a0e1a] placeholder:text-[#0a0e1a]/40 focus:border-[#005257] focus:outline-none transition-colors"
-                      style={{ fontSize: '16px' }}
-                    />
-                    <p className="text-[#0a0e1a]/50 mt-2" style={{ fontSize: '12px' }}>
-                      Initial price per token
-                    </p>
-                  </div>
-                </div>
-
-                {/* Max Tokens Per Fan */}
-                <div>
-                  <label className="block text-[#0a0e1a] mb-2" style={{ fontSize: '15px', fontWeight: 600 }}>
-                    Max Tokens per Fan (Optional)
-                  </label>
-                  <input
-                    type="number"
-                    value={formData.maxTokensPerFan}
-                    onChange={(e) => handleInputChange('maxTokensPerFan', e.target.value)}
-                    placeholder="e.g. 1000"
-                    className="w-full px-4 py-3 bg-[#faf7ec] border-2 border-[#0a0e1a]/10 rounded-xl text-[#0a0e1a] placeholder:text-[#0a0e1a]/40 focus:border-[#005257] focus:outline-none transition-colors"
-                    style={{ fontSize: '16px' }}
-                  />
-                  <p className="text-[#0a0e1a]/50 mt-2" style={{ fontSize: '12px' }}>
-                    Limit how many tokens each fan can purchase
-                  </p>
-                </div>
-
-                {/* Advanced Settings Toggle */}
-                <div className="bg-[#faf7ec] rounded-xl p-4 flex items-center justify-between">
-                  <div>
-                    <p className="text-[#0a0e1a]" style={{ fontSize: '15px', fontWeight: 600 }}>
-                      Allow Future Minting
-                    </p>
-                    <p className="text-[#0a0e1a]/60" style={{ fontSize: '13px' }}>
-                      You can create more tokens later
-                    </p>
-                  </div>
-                  <Switch
-                    checked={formData.allowFutureMinting}
-                    onCheckedChange={(checked) => handleInputChange('allowFutureMinting', checked)}
-                  />
-                </div>
-              </div>
-
-              <div className="flex gap-4 pt-6 border-t border-[#0a0e1a]/10">
-                <motion.button
-                  onClick={handleBackButton}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="px-6 py-3 rounded-full border-2 border-[#0a0e1a]/20 text-[#0a0e1a] flex items-center gap-2"
-                  style={{ fontSize: '16px', fontWeight: 600 }}
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                  Back
-                </motion.button>
-                <motion.button
-                  onClick={handleNext}
-                  disabled={!canProceed()}
-                  whileHover={canProceed() ? { scale: 1.02, boxShadow: '0 20px 40px rgba(234, 83, 42, 0.25)' } : {}}
-                  whileTap={canProceed() ? { scale: 0.98 } : {}}
-                  className="flex-1 px-8 py-4 rounded-full bg-gradient-to-r from-[#ea532a] to-orange-600 text-white flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
-                  style={{ fontSize: '16px', fontWeight: 600 }}
-                >
-                  Continue to Set Fan Perks
-                  <ArrowRight className="w-5 h-5" />
-                </motion.button>
-              </div>
-            </motion.div>
-          )}
-
-          {/* Step 3: Fan Perks */}
-          {currentStep === 2 && (
             <motion.div
               key="step2"
               initial={{ opacity: 0, x: 20 }}
@@ -501,14 +384,14 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
                 </div>
 
                 {/* Right - Live Preview */}
-                <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-3xl p-8 shadow-lg">
-                  <h3 className="text-white mb-6" style={{ fontSize: '18px', fontWeight: 600 }}>
+                <div className="rounded-3xl p-8 shadow-lg" style={{ backgroundColor: cardColor }}>
+                  <h3 className="text-[#0a0e1a] mb-6" style={{ fontSize: '18px', fontWeight: 600 }}>
                     Token Preview
                   </h3>
                   
-                  <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                  <div className="bg-white/90 backdrop-blur-lg rounded-2xl p-6 border border-[#0a0e1a]/10 shadow-lg">
                     {/* Token Image */}
-                    <div className="w-24 h-24 mx-auto mb-4 rounded-2xl bg-white/20 overflow-hidden flex items-center justify-center">
+                    <div className="w-24 h-24 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[#005257] to-[#005257]/70 overflow-hidden flex items-center justify-center">
                       {formData.tokenImage ? (
                         <img src={formData.tokenImage} alt="Token" className="w-full h-full object-cover" />
                       ) : (
@@ -518,25 +401,25 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
 
                     {/* Token Info */}
                     <div className="text-center mb-6">
-                      <h4 className="text-white mb-1" style={{ fontSize: '22px', fontWeight: 700 }}>
+                      <h4 className="text-[#0a0e1a] mb-1" style={{ fontSize: '22px', fontWeight: 700 }}>
                         {formData.tokenName || 'Your Token Name'}
                       </h4>
-                      <p className="text-white/80" style={{ fontSize: '16px' }}>
+                      <p className="text-[#0a0e1a]/80" style={{ fontSize: '16px' }}>
                         ${formData.tokenSymbol || 'SYMBOL'}
                       </p>
                     </div>
 
                     {/* Stats */}
                     <div className="grid grid-cols-2 gap-4 mb-6">
-                      <div className="bg-white/10 rounded-xl p-3 text-center">
-                        <p className="text-white/70" style={{ fontSize: '12px' }}>Supply</p>
-                        <p className="text-white" style={{ fontSize: '16px', fontWeight: 600 }}>
+                      <div className="bg-[#0a0e1a]/5 rounded-xl p-3 text-center">
+                        <p className="text-[#0a0e1a]/70" style={{ fontSize: '12px' }}>Supply</p>
+                        <p className="text-[#0a0e1a]" style={{ fontSize: '16px', fontWeight: 600 }}>
                           {formData.totalSupply ? Number(formData.totalSupply).toLocaleString() : '—'}
                         </p>
                       </div>
-                      <div className="bg-white/10 rounded-xl p-3 text-center">
-                        <p className="text-white/70" style={{ fontSize: '12px' }}>Price</p>
-                        <p className="text-white" style={{ fontSize: '16px', fontWeight: 600 }}>
+                      <div className="bg-[#0a0e1a]/5 rounded-xl p-3 text-center">
+                        <p className="text-[#0a0e1a]/70" style={{ fontSize: '12px' }}>Price</p>
+                        <p className="text-[#0a0e1a]" style={{ fontSize: '16px', fontWeight: 600 }}>
                           ${formData.startingPrice || '—'}
                         </p>
                       </div>
@@ -544,25 +427,25 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
 
                     {/* Active Perks */}
                     <div>
-                      <p className="text-white/80 mb-3" style={{ fontSize: '12px', fontWeight: 600 }}>
+                      <p className="text-[#0a0e1a]/80 mb-3" style={{ fontSize: '12px', fontWeight: 600 }}>
                         HOLDER PERKS
                       </p>
                       <div className="space-y-2">
                         {formData.exclusiveContent && (
-                          <div className="flex items-center gap-2 text-white" style={{ fontSize: '13px' }}>
-                            <Check className="w-4 h-4" />
+                          <div className="flex items-center gap-2 text-[#0a0e1a]" style={{ fontSize: '13px' }}>
+                            <Check className="w-4 h-4 text-green-600" />
                             Exclusive Content
                           </div>
                         )}
                         {formData.communityAccess && (
-                          <div className="flex items-center gap-2 text-white" style={{ fontSize: '13px' }}>
-                            <Check className="w-4 h-4" />
+                          <div className="flex items-center gap-2 text-[#0a0e1a]" style={{ fontSize: '13px' }}>
+                            <Check className="w-4 h-4 text-green-600" />
                             Community Access
                           </div>
                         )}
                         {formData.earlyAccess && (
-                          <div className="flex items-center gap-2 text-white" style={{ fontSize: '13px' }}>
-                            <Check className="w-4 h-4" />
+                          <div className="flex items-center gap-2 text-[#0a0e1a]" style={{ fontSize: '13px' }}>
+                            <Check className="w-4 h-4 text-green-600" />
                             Early Access
                           </div>
                         )}
@@ -598,9 +481,9 @@ export function TokenWizard({ onNext, onBack, userData, updateUserData }: TokenW
           )}
 
           {/* Step 4: Review & Publish */}
-          {currentStep === 3 && (
+          {currentStep === 2 && (
             <motion.div
-              key="step3"
+              key="step2"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}

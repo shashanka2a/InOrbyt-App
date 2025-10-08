@@ -228,7 +228,7 @@ export function FanProfileView({ userData, onClose }: FanProfileViewProps) {
             </div>
             <div className="bg-white/5 rounded-xl p-4">
               <p className="text-[#f9f4e1]/60 mb-1" style={{ fontSize: '13px' }}>Blockchain</p>
-              <p className="text-[#f9f4e1]" style={{ fontSize: '16px', fontWeight: 600 }}>Ethereum</p>
+              <p className="text-[#f9f4e1]" style={{ fontSize: '16px', fontWeight: 600 }}>Base</p>
             </div>
             <div className="bg-white/5 rounded-xl p-4">
               <p className="text-[#f9f4e1]/60 mb-1" style={{ fontSize: '13px' }}>Starting Price</p>
