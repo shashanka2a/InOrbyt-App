@@ -60,7 +60,7 @@ export function Navigation() {
               whileTap={{ scale: 0.95 }}
               className="relative group"
             >
-              <Logo variant="white" size="lg" />
+              <Logo variant="white" size="lg" showText={false} />
               <motion.div 
                 className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-orange-500 to-orange-600 origin-left"
                 initial={{ scaleX: 0 }}

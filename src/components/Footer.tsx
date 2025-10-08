@@ -10,7 +10,7 @@ export function Footer() {
           {/* Brand */}
           <div>
             <div className="mb-4">
-              <Logo variant="white" size="lg" />
+              <Logo variant="white" size="lg" showText={false} />
             </div>
             <p className="text-[#f9f4e1]/70 mb-6" style={{ fontSize: '14px' }}>
               Creator-owned.<br />Fan-powered.

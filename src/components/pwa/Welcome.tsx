@@ -42,7 +42,7 @@ export function Welcome({ onNext, onLearnMore }: WelcomeProps) {
             transition={{ delay: 0.1 }}
             className="mb-6"
           >
-            <Logo variant="default" size="xl" />
+            <Logo variant="default" size="xl" showText={false} />
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
