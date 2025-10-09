@@ -137,7 +137,7 @@ export function Dashboard({ userData, updateUserData }: DashboardProps) {
       >
         {/* Logo */}
         <div className="mb-4">
-          <Logo variant="white" size="md" showText={false} />
+          <img src="/inorbyt_favicon.png" alt="InOrbyt" className="h-8 w-8" />
         </div>
 
         {/* Navigation Icons */}

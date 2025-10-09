@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: 'InOrbyt',
   description: 'Web3 fan engagement and tokenized experiences',
   icons: {
-    icon: '/favicon.ico',
+    icon: '/inorbyt_favicon.png',
   },
   openGraph: {
     title: 'InOrbyt',
