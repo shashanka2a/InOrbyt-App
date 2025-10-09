@@ -57,13 +57,21 @@ export function Footer() {
               Product
             </h3>
             <ul className="space-y-3">
-              {['How It Works', 'Features', 'Pricing', 'Demo'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-[#f9f4e1]/70 hover:text-[#f9f4e1] transition-colors duration-200" style={{ fontSize: '14px' }}>
-                    {item}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <a href="/#how-it-works" className="text-[#f9f4e1]/70 hover:text-[#f9f4e1] transition-colors duration-200" style={{ fontSize: '14px' }}>
+                  How It Works
+                </a>
+              </li>
+              <li>
+                <a href="/#features" className="text-[#f9f4e1]/70 hover:text-[#f9f4e1] transition-colors duration-200" style={{ fontSize: '14px' }}>
+                  Features
+                </a>
+              </li>
+              <li>
+                <a href="/#pwa" className="text-[#f9f4e1]/70 hover:text-[#f9f4e1] transition-colors duration-200" style={{ fontSize: '14px' }}>
+                  Demo
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -73,13 +81,16 @@ export function Footer() {
               Company
             </h3>
             <ul className="space-y-3">
-              {['About', 'Blog', 'Careers', 'Press Kit'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-[#f9f4e1]/70 hover:text-[#f9f4e1] transition-colors duration-200" style={{ fontSize: '14px' }}>
-                    {item}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <a href="/about" className="text-[#f9f4e1]/70 hover:text-[#f9f4e1] transition-colors duration-200" style={{ fontSize: '14px' }}>
+                  About
+                </a>
+              </li>
+              <li>
+                <a href="#" className="text-[#f9f4e1]/70 hover:text-[#f9f4e1] transition-colors duration-200" style={{ fontSize: '14px' }}>
+                  Blog
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -89,13 +100,21 @@ export function Footer() {
               Legal
             </h3>
             <ul className="space-y-3">
-              {['Privacy Policy', 'Terms of Service', 'Cookie Policy', 'Disclaimer'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="text-[#f9f4e1]/70 hover:text-[#f9f4e1] transition-colors duration-200" style={{ fontSize: '14px' }}>
-                    {item}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <a href="/privacy" className="text-[#f9f4e1]/70 hover:text-[#f9f4e1] transition-colors duration-200" style={{ fontSize: '14px' }}>
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a href="/terms" className="text-[#f9f4e1]/70 hover:text-[#f9f4e1] transition-colors duration-200" style={{ fontSize: '14px' }}>
+                  Terms of Service
+                </a>
+              </li>
+              <li>
+                <a href="/disclaimer" className="text-[#f9f4e1]/70 hover:text-[#f9f4e1] transition-colors duration-200" style={{ fontSize: '14px' }}>
+                  Disclaimer
+                </a>
+              </li>
             </ul>
           </div>
         </div>
