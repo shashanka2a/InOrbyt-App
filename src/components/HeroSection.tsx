@@ -151,7 +151,10 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.9 }}
           className="flex items-center justify-center gap-4 flex-wrap"
         >
-          <motion.button
+          <motion.a
+            href="https://forms.inorbyt.io/hello"
+            target="_blank"
+            rel="noopener noreferrer"
             whileHover={{ 
               scale: 1.05,
               boxShadow: '0 20px 40px rgba(249, 115, 22, 0.4), 0 0 60px rgba(249, 115, 22, 0.2)'
@@ -161,7 +164,7 @@ export function HeroSection() {
             style={{ fontSize: '18px', fontWeight: 600 }}
           >
             <motion.span className="relative z-10 flex items-center gap-2">
-              Get Early Access
+              Join Early Access
               <motion.span
                 animate={{ x: [0, 4, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
@@ -185,7 +188,7 @@ export function HeroSection() {
                 width: '50%'
               }}
             />
-          </motion.button>
+          </motion.a>
 
           <motion.button
             whileHover={{ 

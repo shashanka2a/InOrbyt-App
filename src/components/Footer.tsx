@@ -6,6 +6,42 @@ export function Footer() {
   return (
     <footer className="py-16 px-6" style={{ backgroundColor: '#005257' }}>
       <div className="max-w-7xl mx-auto">
+        {/* CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-[#f9f4e1] mb-4" style={{ fontSize: '32px', fontWeight: 700 }}>
+            Ready to get started?
+          </h2>
+          <p className="text-[#f9f4e1]/70 mb-8 max-w-2xl mx-auto" style={{ fontSize: '18px' }}>
+            Join our early waitlist and be the first to experience the future of creator-fan engagement.
+          </p>
+          <motion.a
+            href="https://forms.inorbyt.io/hello"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ 
+              scale: 1.05,
+              boxShadow: '0 20px 40px rgba(249, 115, 22, 0.4), 0 0 60px rgba(249, 115, 22, 0.2)'
+            }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-xl shadow-orange-500/30"
+            style={{ fontSize: '18px', fontWeight: 600 }}
+          >
+            Join InOrbyt Launchpad
+            <motion.span
+              animate={{ x: [0, 4, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              →
+            </motion.span>
+          </motion.a>
+        </motion.div>
+
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div>
