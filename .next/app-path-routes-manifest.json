@@ -1,8 +1,8 @@
 {
   "/_not-found/page": "/_not-found",
   "/about/page": "/about",
-  "/terms/page": "/terms",
-  "/privacy/page": "/privacy",
+  "/disclaimer/page": "/disclaimer",
   "/page": "/",
-  "/disclaimer/page": "/disclaimer"
+  "/terms/page": "/terms",
+  "/privacy/page": "/privacy"
 }
