@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,83 +7,235 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ===== CORE USER & PROFILE MODELS =====
-
 model User {
-  id                String    @id @default(cuid())
-  email             String    @unique
-  displayName       String
-  username          String    @unique
-  bio               String?
-  avatarUrl         String?
-  isCreator         Boolean   @default(false)
-  isVerified        Boolean   @default(false)
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-
-  // Relations
-  creatorProfile    CreatorProfile?
-  wallets           Wallet[]
-  transactions      Transaction[]
-  tokenHoldings     TokenHolding[]
-  perkRedemptions   PerkRedemption[]
-  notifications     Notification[]
-  sessions          Session[]
+  id              String           @id @default(cuid())
+  email           String           @unique
+  displayName     String
+  username        String           @unique
+  bio             String?
+  avatarUrl       String?
+  isCreator       Boolean          @default(false)
+  isVerified      Boolean          @default(false)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  creatorProfile  CreatorProfile?
+  notifications   Notification[]
+  perkRedemptions PerkRedemption[]
+  sessions        Session[]
+  tokenHoldings   TokenHolding[]
+  transactions    Transaction[]
+  wallets         Wallet[]
 
   @@map("users")
 }
 
 model CreatorProfile {
-  id                String    @id @default(cuid())
-  userId            String    @unique
-  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  // Social links
-  twitterHandle     String?
-  instagramHandle   String?
-  youtubeChannel    String?
-  website           String?
-  
-  // Creator stats
-  totalFollowers    Int       @default(0)
-  totalRevenue      Decimal   @default(0) @db.Decimal(18, 8)
-  isPublic          Boolean   @default(true)
-  
-  // Relations
-  tokens            CreatorToken[]
-  perks            Perk[]
-  
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  id              String         @id @default(cuid())
+  userId          String         @unique
+  twitterHandle   String?
+  instagramHandle String?
+  youtubeChannel  String?
+  website         String?
+  totalFollowers  Int            @default(0)
+  totalRevenue    Decimal        @default(0) @db.Decimal(18, 8)
+  isPublic        Boolean        @default(true)
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokens          CreatorToken[]
+  perks           Perk[]
 
   @@map("creator_profiles")
 }
 
-// ===== WALLET & BLOCKCHAIN MODELS =====
-
 model Wallet {
-  id                String    @id @default(cuid())
-  userId            String
-  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  // Wallet details
-  address           String    @unique
-  walletType        WalletType
-  isActive          Boolean   @default(true)
-  isCustodial       Boolean   @default(false) // Privy custodial vs self-custody
-  
-  // Blockchain metadata
-  chainId           Int       @default(8453) // Base mainnet
-  networkName       String    @default("base")
-  
-  // Relations
-  transactions      Transaction[]
-  tokenHoldings     TokenHolding[]
-  
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  id            String         @id @default(cuid())
+  userId        String
+  address       String         @unique
+  walletType    WalletType
+  isActive      Boolean        @default(true)
+  isCustodial   Boolean        @default(false)
+  chainId       Int            @default(8453)
+  networkName   String         @default("base")
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  tokenHoldings TokenHolding[]
+  transactions  Transaction[]
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("wallets")
+}
+
+model CreatorToken {
+  id                 String         @id @default(cuid())
+  creatorId          String
+  name               String
+  symbol             String         @unique
+  description        String?
+  imageUrl           String?
+  totalSupply        BigInt         @default(1000000)
+  currentSupply      BigInt         @default(0)
+  startingPrice      Decimal        @db.Decimal(18, 8)
+  currentPrice       Decimal        @db.Decimal(18, 8)
+  maxTokensPerFan    BigInt         @default(1000)
+  allowFutureMinting Boolean        @default(false)
+  contractAddress    String?        @unique
+  tokenId            String?
+  deploymentTxHash   String?
+  isDeployed         Boolean        @default(false)
+  totalHolders       Int            @default(0)
+  totalVolume        Decimal        @default(0) @db.Decimal(18, 8)
+  floorPrice         Decimal        @default(0) @db.Decimal(18, 8)
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  creator            CreatorProfile @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  perks              Perk[]
+  holdings           TokenHolding[]
+  transactions       Transaction[]
+
+  @@map("creator_tokens")
+}
+
+model TokenHolding {
+  id            String       @id @default(cuid())
+  userId        String
+  walletId      String
+  tokenId       String
+  balance       Decimal      @db.Decimal(18, 8)
+  averagePrice  Decimal      @db.Decimal(18, 8)
+  totalInvested Decimal      @db.Decimal(18, 8)
+  lastSyncedAt  DateTime?
+  isActive      Boolean      @default(true)
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+  token         CreatorToken @relation(fields: [tokenId], references: [id], onDelete: Cascade)
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet        Wallet       @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, tokenId])
+  @@map("token_holdings")
+}
+
+model Transaction {
+  id          String            @id @default(cuid())
+  userId      String
+  walletId    String
+  tokenId     String?
+  type        TransactionType
+  amount      Decimal           @db.Decimal(18, 8)
+  price       Decimal?          @db.Decimal(18, 8)
+  totalValue  Decimal           @db.Decimal(18, 8)
+  txHash      String?           @unique
+  blockNumber BigInt?
+  gasUsed     BigInt?
+  gasPrice    BigInt?
+  status      TransactionStatus @default(PENDING)
+  description String?
+  metadata    Json?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  token       CreatorToken?     @relation(fields: [tokenId], references: [id])
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet      Wallet            @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
+  @@map("transactions")
+}
+
+model Perk {
+  id                 String           @id @default(cuid())
+  creatorId          String
+  tokenId            String?
+  title              String
+  description        String
+  type               PerkType
+  isActive           Boolean          @default(true)
+  minTokensRequired  Decimal?         @db.Decimal(18, 8)
+  maxRedemptions     Int?
+  currentRedemptions Int              @default(0)
+  imageUrl           String?
+  metadata           Json?
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  redemptions        PerkRedemption[]
+  creator            CreatorProfile   @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  token              CreatorToken?    @relation(fields: [tokenId], references: [id], onDelete: Cascade)
+
+  @@map("perks")
+}
+
+model PerkRedemption {
+  id         String           @id @default(cuid())
+  userId     String
+  perkId     String
+  status     RedemptionStatus @default(PENDING)
+  redeemedAt DateTime?
+  expiresAt  DateTime?
+  metadata   Json?
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  perk       Perk             @relation(fields: [perkId], references: [id], onDelete: Cascade)
+  user       User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("perk_redemptions")
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  isRead    Boolean          @default(false)
+  data      Json?
+  actionUrl String?
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  isActive  Boolean  @default(true)
+  userAgent String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model BlockchainEvent {
+  id              String   @id @default(cuid())
+  eventType       String
+  contractAddress String
+  blockNumber     BigInt
+  transactionHash String
+  logIndex        Int
+  data            Json
+  processed       Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([transactionHash, logIndex])
+  @@map("blockchain_events")
+}
+
+model GasPayment {
+  id              String   @id @default(cuid())
+  transactionHash String   @unique
+  amount          Decimal  @db.Decimal(18, 8)
+  tokenAddress    String?
+  paidBy          String
+  metadata        Json?
+  createdAt       DateTime @default(now())
+
+  @@map("gas_payments")
 }
 
 enum WalletType {
@@ -96,108 +245,6 @@ enum WalletType {
   PHANTOM
   WALLETCONNECT
   INORBYT_CUSTODIAL
-}
-
-// ===== TOKEN MODELS =====
-
-model CreatorToken {
-  id                String    @id @default(cuid())
-  creatorId         String
-  creator           CreatorProfile @relation(fields: [creatorId], references: [id], onDelete: Cascade)
-  
-  // Token details
-  name              String
-  symbol            String    @unique
-  description       String?
-  imageUrl          String?
-  
-  // Token economics
-  totalSupply       BigInt    @default(1000000) // Fixed 1M supply
-  currentSupply     BigInt   @default(0)
-  startingPrice     Decimal  @db.Decimal(18, 8)
-  currentPrice      Decimal  @db.Decimal(18, 8)
-  maxTokensPerFan   BigInt   @default(1000)
-  allowFutureMinting Boolean @default(false)
-  
-  // Blockchain data
-  contractAddress   String?   @unique
-  tokenId           String?   // For ERC-1155 if needed
-  deploymentTxHash  String?
-  isDeployed        Boolean   @default(false)
-  
-  // Stats
-  totalHolders      Int       @default(0)
-  totalVolume       Decimal   @default(0) @db.Decimal(18, 8)
-  floorPrice        Decimal   @default(0) @db.Decimal(18, 8)
-  
-  // Relations
-  transactions      Transaction[]
-  holdings          TokenHolding[]
-  perks            Perk[]
-  
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-
-  @@map("creator_tokens")
-}
-
-model TokenHolding {
-  id                String    @id @default(cuid())
-  userId            String
-  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  walletId          String
-  wallet            Wallet    @relation(fields: [walletId], references: [id], onDelete: Cascade)
-  tokenId           String
-  token             CreatorToken @relation(fields: [tokenId], references: [id], onDelete: Cascade)
-  
-  // Holding details
-  balance           Decimal   @db.Decimal(18, 8)
-  averagePrice      Decimal   @db.Decimal(18, 8)
-  totalInvested     Decimal   @db.Decimal(18, 8)
-  
-  // Blockchain sync
-  lastSyncedAt      DateTime?
-  isActive          Boolean   @default(true)
-  
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-
-  @@unique([userId, tokenId])
-  @@map("token_holdings")
-}
-
-// ===== TRANSACTION MODELS =====
-
-model Transaction {
-  id                String    @id @default(cuid())
-  userId            String
-  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  walletId          String
-  wallet            Wallet    @relation(fields: [walletId], references: [id], onDelete: Cascade)
-  tokenId           String?
-  token             CreatorToken? @relation(fields: [tokenId], references: [id], onDelete: SetNull)
-  
-  // Transaction details
-  type              TransactionType
-  amount            Decimal   @db.Decimal(18, 8)
-  price             Decimal?  @db.Decimal(18, 8)
-  totalValue        Decimal   @db.Decimal(18, 8)
-  
-  // Blockchain data
-  txHash            String?   @unique
-  blockNumber       BigInt?
-  gasUsed           BigInt?
-  gasPrice          BigInt?
-  status            TransactionStatus @default(PENDING)
-  
-  // Metadata
-  description       String?
-  metadata          Json?
-  
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-
-  @@map("transactions")
 }
 
 enum TransactionType {
@@ -217,60 +264,6 @@ enum TransactionStatus {
   CANCELLED
 }
 
-// ===== PERKS MODELS =====
-
-model Perk {
-  id                String    @id @default(cuid())
-  creatorId         String
-  creator           CreatorProfile @relation(fields: [creatorId], references: [id], onDelete: Cascade)
-  tokenId           String?
-  token             CreatorToken? @relation(fields: [tokenId], references: [id], onDelete: Cascade)
-  
-  // Perk details
-  title             String
-  description       String
-  type              PerkType
-  isActive          Boolean   @default(true)
-  
-  // Requirements
-  minTokensRequired Decimal? @db.Decimal(18, 8)
-  maxRedemptions    Int?
-  currentRedemptions Int      @default(0)
-  
-  // Metadata
-  imageUrl          String?
-  metadata          Json?
-  
-  // Relations
-  redemptions       PerkRedemption[]
-  
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-
-  @@map("perks")
-}
-
-model PerkRedemption {
-  id                String    @id @default(cuid())
-  userId            String
-  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  perkId            String
-  perk              Perk      @relation(fields: [perkId], references: [id], onDelete: Cascade)
-  
-  // Redemption details
-  status            RedemptionStatus @default(PENDING)
-  redeemedAt        DateTime?
-  expiresAt         DateTime?
-  
-  // Metadata
-  metadata          Json?
-  
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-
-  @@map("perk_redemptions")
-}
-
 enum PerkType {
   EXCLUSIVE_CONTENT
   COMMUNITY_ACCESS
@@ -288,29 +281,6 @@ enum RedemptionStatus {
   CANCELLED
 }
 
-// ===== NOTIFICATION MODELS =====
-
-model Notification {
-  id                String    @id @default(cuid())
-  userId            String
-  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  // Notification details
-  type              NotificationType
-  title             String
-  message           String
-  isRead            Boolean   @default(false)
-  
-  // Metadata
-  data              Json?
-  actionUrl         String?
-  
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-
-  @@map("notifications")
-}
-
 enum NotificationType {
   TOKEN_PURCHASE
   PERK_REDEMPTION
@@ -319,66 +289,4 @@ enum NotificationType {
   NEW_FOLLOWER
   PRICE_ALERT
   SYSTEM_UPDATE
-}
-
-// ===== SESSION MODELS =====
-
-model Session {
-  id                String    @id @default(cuid())
-  userId            String
-  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  // Session details
-  token             String    @unique
-  expiresAt         DateTime
-  isActive           Boolean   @default(true)
-  
-  // Metadata
-  userAgent         String?
-  ipAddress         String?
-  
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-
-  @@map("sessions")
-}
-
-// ===== BLOCKCHAIN SYNC MODELS =====
-
-model BlockchainEvent {
-  id                String    @id @default(cuid())
-  
-  // Event details
-  eventType         String
-  contractAddress   String
-  blockNumber       BigInt
-  transactionHash   String
-  logIndex          Int
-  
-  // Event data
-  data              Json
-  processed         Boolean   @default(false)
-  
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-
-  @@unique([transactionHash, logIndex])
-  @@map("blockchain_events")
-}
-
-model GasPayment {
-  id                String    @id @default(cuid())
-  
-  // Payment details
-  transactionHash   String    @unique
-  amount            Decimal   @db.Decimal(18, 8)
-  tokenAddress       String?   // null for ETH
-  paidBy            String    // InOrbyt wallet address
-  
-  // Metadata
-  metadata          Json?
-  
-  createdAt         DateTime  @default(now())
-
-  @@map("gas_payments")
 }
