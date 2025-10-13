@@ -125,7 +125,7 @@ This document provides a comprehensive assessment of what's ready for MVP launch
 
 ## 📊 **MVP DEVELOPMENT ROADMAP**
 
-### **Phase 1: Smart Contract Development (2-3 weeks)**
+### **Phase 1: Smart Contract Development (2-3 days)**
 
 #### **Day 1-2: Core Token Contracts**
 - [ ] Deploy ERC-20 token factory on Base network
@@ -139,7 +139,7 @@ This document provides a comprehensive assessment of what's ready for MVP launch
 - [ ] Add blockchain event monitoring
 - [ ] Test on Base Sepolia testnet
 
-### **Phase 2: Blockchain Integration (2-3 weeks)**
+### **Phase 2: Blockchain Integration (2-3 days)**
 
 #### **Day 1: Wallet Integration**
 - [ ] Integrate Privy for custodial wallets
