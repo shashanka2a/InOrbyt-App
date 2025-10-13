@@ -256,7 +256,8 @@ async function handleTokenPurchase(event: any) {
       txHash: event.transactionHash,
       blockNumber: BigInt(event.blockNumber),
       status: 'CONFIRMED',
-    });
+    },
+  });
 }
 
 async function handlePerkRedemption(event: any) {
@@ -269,7 +270,8 @@ async function handlePerkRedemption(event: any) {
       perkId: perkId,
       status: 'REDEEMED',
       redeemedAt: new Date(),
-    });
+    },
+  });
 }
 
 async function handlePriceUpdate(event: any) {

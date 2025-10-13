@@ -12,7 +12,7 @@
       "static/chunks/4bd1b696-382748cc942d8a14.js",
       "static/chunks/255-c43c1a2b814c9677.js",
       "static/chunks/main-app-641949a526f4baff.js",
-      "static/css/b7fc0359c0a0efba.css",
+      "static/css/08ef7df9979c9714.css",
       "static/chunks/app/layout-e4c7ab577e8f255c.js"
     ],
     "/about/page": [
@@ -22,12 +22,12 @@
       "static/chunks/main-app-641949a526f4baff.js",
       "static/chunks/app/about/page-0d93af08b3c4e361.js"
     ],
-    "/disclaimer/page": [
+    "/terms/page": [
       "static/chunks/webpack-e1ae44446e7f7355.js",
       "static/chunks/4bd1b696-382748cc942d8a14.js",
       "static/chunks/255-c43c1a2b814c9677.js",
       "static/chunks/main-app-641949a526f4baff.js",
-      "static/chunks/app/disclaimer/page-0d93af08b3c4e361.js"
+      "static/chunks/app/terms/page-0d93af08b3c4e361.js"
     ],
     "/privacy/page": [
       "static/chunks/webpack-e1ae44446e7f7355.js",
@@ -36,20 +36,20 @@
       "static/chunks/main-app-641949a526f4baff.js",
       "static/chunks/app/privacy/page-0d93af08b3c4e361.js"
     ],
-    "/terms/page": [
-      "static/chunks/webpack-e1ae44446e7f7355.js",
-      "static/chunks/4bd1b696-382748cc942d8a14.js",
-      "static/chunks/255-c43c1a2b814c9677.js",
-      "static/chunks/main-app-641949a526f4baff.js",
-      "static/chunks/app/terms/page-0d93af08b3c4e361.js"
-    ],
     "/page": [
       "static/chunks/webpack-e1ae44446e7f7355.js",
       "static/chunks/4bd1b696-382748cc942d8a14.js",
       "static/chunks/255-c43c1a2b814c9677.js",
       "static/chunks/main-app-641949a526f4baff.js",
-      "static/chunks/973-fe75f08f5ed5aacc.js",
-      "static/chunks/app/page-89bf2e12950ccb30.js"
+      "static/chunks/834-b679689dc25af37f.js",
+      "static/chunks/app/page-fe94f1ad851f2fa0.js"
+    ],
+    "/disclaimer/page": [
+      "static/chunks/webpack-e1ae44446e7f7355.js",
+      "static/chunks/4bd1b696-382748cc942d8a14.js",
+      "static/chunks/255-c43c1a2b814c9677.js",
+      "static/chunks/main-app-641949a526f4baff.js",
+      "static/chunks/app/disclaimer/page-0d93af08b3c4e361.js"
     ]
   }
 }
