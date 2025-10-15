@@ -64,7 +64,6 @@
     "wagmi": "^2.12.11",
     "viem": "^2.21.15",
     "@web3modal/wagmi": "^5.1.11",
-    "@web3modal/ethereum": "^4.2.2",
     "@privy-io/react-auth": "^1.74.0"
   },
   "devDependencies": {
