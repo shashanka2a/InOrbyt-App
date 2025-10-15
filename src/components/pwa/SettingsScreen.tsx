@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { User, Bell, Shield, Link2, Globe, Moon, Sun, Mail, Lock, Camera, Save } from 'lucide-react';
+import { User, Bell, Shield, Link2, Globe, Moon, Sun, Mail, Lock, Camera, Save, PlugZap, Unplug } from 'lucide-react';
 import { Switch } from '../ui/switch';
 import type { UserData } from './PWAContainer';
+import { useWallet } from './WalletContext';
 
 interface SettingsScreenProps {
   userData: UserData;
@@ -12,6 +13,7 @@ interface SettingsScreenProps {
 }
 
 export function SettingsScreen({ userData, updateUserData, darkMode, setDarkMode }: SettingsScreenProps) {
+  const { address, walletType, connectEip1193, disconnect } = useWallet();
   const [displayName, setDisplayName] = useState(userData.displayName);
   const [username, setUsername] = useState(userData.username);
   const [bio, setBio] = useState(userData.bio);
@@ -324,16 +326,22 @@ export function SettingsScreen({ userData, updateUserData, darkMode, setDarkMode
                   </div>
                   <div>
                     <p style={{ fontSize: '15px', fontWeight: 600, color: textColor }}>
-                      {userData.connectedWallet || 'No wallet connected'}
+                      {userData.connectedWallet || (address ? 'EVM Wallet' : 'No wallet connected')}
                     </p>
                     <p style={{ fontSize: '13px', color: textMuted }}>
-                      0x742d...9a3f
+                      {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : '—'}
                     </p>
                   </div>
                 </div>
-                <span className="px-3 py-1 bg-green-500/10 text-green-500 rounded-full" style={{ fontSize: '12px', fontWeight: 600 }}>
-                  Connected
-                </span>
+                {address ? (
+                  <button onClick={disconnect} className="px-3 py-1 bg-red-500/10 text-red-500 rounded-full" style={{ fontSize: '12px', fontWeight: 600 }}>
+                    <span className="inline-flex items-center gap-1"><Unplug className="w-3 h-3" /> Disconnect</span>
+                  </button>
+                ) : (
+                  <button onClick={connectEip1193} className="px-3 py-1 bg-green-500/10 text-green-500 rounded-full" style={{ fontSize: '12px', fontWeight: 600 }}>
+                    <span className="inline-flex items-center gap-1"><PlugZap className="w-3 h-3" /> Connect</span>
+                  </button>
+                )}
               </div>
             </div>
           </div>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Wallet, Plus, ArrowRight, X } from 'lucide-react';
 import type { UserData } from './PWAContainer';
+import { useWallet } from './WalletContext';
 
 interface WalletSetupProps {
   onNext: () => void;
@@ -13,6 +14,7 @@ interface WalletSetupProps {
 export function WalletSetup({ onNext, onBack, userData, updateUserData }: WalletSetupProps) {
   const [showWalletModal, setShowWalletModal] = useState(false);
   const [selectedWallet, setSelectedWallet] = useState<string | null>(userData.connectedWallet);
+  const { connectEip1193, connectWalletConnect, connectPrivy } = useWallet();
 
   const walletOptions = [
     { name: 'MetaMask', logo: '🦊', color: 'from-orange-500 to-orange-600' },
@@ -25,24 +27,33 @@ export function WalletSetup({ onNext, onBack, userData, updateUserData }: Wallet
     setShowWalletModal(true);
   };
 
-  const handleWalletSelect = (walletName: string) => {
+  const handleWalletSelect = async (walletName: string) => {
     setSelectedWallet(walletName);
-    updateUserData({
-      walletType: 'connect',
-      connectedWallet: walletName,
-    });
-    setTimeout(() => {
+    try {
+      if (walletName === 'WalletConnect') {
+        await connectWalletConnect();
+      } else if (walletName === 'MetaMask' || walletName === 'Coinbase Wallet') {
+        await connectEip1193();
+      } else {
+        // Phantom shown in UI but not implemented (non-EVM) – fall back for now
+        await connectEip1193();
+      }
+      updateUserData({ walletType: 'connect', connectedWallet: walletName });
       setShowWalletModal(false);
       onNext();
-    }, 800);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  const handleCreateWallet = () => {
-    updateUserData({
-      walletType: 'create',
-      connectedWallet: 'InOrbyt Wallet',
-    });
-    onNext();
+  const handleCreateWallet = async () => {
+    try {
+      await connectPrivy();
+      updateUserData({ walletType: 'create', connectedWallet: 'InOrbyt Wallet' });
+      onNext();
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (

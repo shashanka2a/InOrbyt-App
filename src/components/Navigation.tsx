@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { Logo } from './ui/Logo';
+import { useWeb3Modal } from '@web3modal/wagmi/react';
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -13,6 +14,7 @@ export function Navigation() {
     damping: 30,
     restDelta: 0.001
   });
+  const { open } = useWeb3Modal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -98,28 +100,45 @@ export function Navigation() {
             </div>
           </div>
 
-          <motion.button
-            onClick={() => window.location.href = '#pwa'}
-            whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(249, 115, 22, 0.4)' }}
-            whileTap={{ scale: 0.95 }}
-            className="relative px-6 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white overflow-hidden group"
-            style={{ fontSize: '15px', fontWeight: 600 }}
-          >
-            <span className="relative z-10">Try InOrbyt</span>
-            <motion.div 
-              className="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-500"
-              initial={{ opacity: 0 }}
-              whileHover={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-            />
-            {/* Shine effect */}
-            <motion.div
-              className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"
-              style={{
-                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)'
+          <div className="flex items-center gap-3">
+            <motion.button
+              onClick={async () => {
+                try {
+                  await open();
+                } catch {
+                  window.location.href = '#pwa';
+                }
               }}
-            />
-          </motion.button>
+              whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(249, 115, 22, 0.4)' }}
+              whileTap={{ scale: 0.95 }}
+              className="relative px-6 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white overflow-hidden group"
+              style={{ fontSize: '15px', fontWeight: 600 }}
+            >
+              <span className="relative z-10">Login</span>
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-500"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+              <motion.div
+                className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"
+                style={{
+                  background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)'
+                }}
+              />
+            </motion.button>
+
+            <motion.button
+              onClick={() => window.location.href = '#pwa'}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-4 py-2 rounded-full border border-[#f9f4e1]/20 text-[#f9f4e1]/80 hover:text-white hover:border-white/40 transition-colors"
+              style={{ fontSize: '15px', fontWeight: 600 }}
+            >
+              Try InOrbyt
+            </motion.button>
+          </div>
         </div>
       </motion.nav>
     </>
