@@ -2,7 +2,7 @@
 import React from 'react';
 import { WagmiProvider } from 'wagmi';
 import { wagmiConfig } from './wagmi';
-import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi/react';
+import { createWeb3Modal } from '@web3modal/wagmi/react';
 import { base, baseSepolia } from 'viem/chains';
 import { PrivyProvider } from '@privy-io/react-auth';
 
