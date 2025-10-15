@@ -108,18 +108,20 @@ npm run hh:deploy:factory
 npm run hh:deploy:all
 ```
 
-### **2. Blockchain Integration (20% Complete)**
+### **2. Blockchain Integration (45% Complete)**
 
 #### **Current Status**
+- ✅ **Wallet Integration (Day 1)**: Wagmi + Web3Modal (WalletConnect) + EIP-1193 injected wallets wired; Privy provider scaffolded
+- ✅ **Wallet Connection Flow**: Login button opens Web3Modal; PWA `WalletSetup` uses context
+- ✅ **Wallet Management UI**: Connect/Disconnect and address display in `Settings`
 - ❌ **No Real Blockchain Events**: Mock data only
 - ❌ **No Token Purchases**: No actual buying/selling functionality
-- ❌ **No Wallet Connections**: No real wallet integration
 - ❌ **No Transaction Processing**: No real blockchain transactions
 
 #### **Required Development**
 ```typescript
 // Blockchain Integration Needed:
-1. Wallet connection (Privy, WalletConnect)
+1. Wallet connection (Privy, WalletConnect) — DONE (Privy appId configure pending)
 2. Token deployment service (wire to `TokenFactory` deploy script)
 3. Real transaction processing (buy/sell via `LiquidityPool` on testnet)
 4. Blockchain event monitoring (listen to `TokenCreated`, `PerkRedeemed`)
@@ -148,10 +150,10 @@ npm run hh:deploy:all
 ### **Phase 2: Blockchain Integration (2-3 days)**
 
 #### **Day 1: Wallet Integration**
-- [ ] Integrate Privy for custodial wallets
-- [ ] Add WalletConnect for self-custody wallets
-- [ ] Implement wallet connection flow
-- [ ] Add wallet management features
+- [x] Integrate Privy for custodial wallets (provider scaffolded; set NEXT_PUBLIC_PRIVY_APP_ID)
+- [x] Add WalletConnect for self-custody wallets (Web3Modal project id)
+- [x] Implement wallet connection flow (Login opens Web3Modal; PWA flow wired)
+- [x] Add wallet management features (connect/disconnect + address display)
 
 #### **Day 2: Transaction Processing**
 - [ ] Implement real token purchases
@@ -176,7 +178,7 @@ npm run hh:deploy:all
 | **Frontend UI** | ✅ Ready | 95% | ✅ Complete |
 | **API Backend** | ✅ Ready | 100% | ✅ Complete |
 | **Smart Contracts** | ✅ Ready | 80% | 🟡 High |
-| **Blockchain Integration** | ❌ Missing | 20% | 🔴 Critical |
+| **Blockchain Integration** | 🟡 In Progress | 45% | 🟡 High |
 
 ---
 
@@ -193,10 +195,12 @@ npm run hh:deploy:all
 
 ### **2. Wallet Integration**
 ```bash
-# Install wallet dependencies
-npm install @privy-io/react-auth
-npm install @walletconnect/web3-provider
-npm install @web3modal/ethereum
+# Already installed: wagmi, viem, @web3modal/wagmi, @web3modal/ethereum, @privy-io/react-auth
+
+# Configure env (Next.js)
+export NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID=...
+export NEXT_PUBLIC_ALCHEMY_BASE_SEPOLIA_URL=...
+export NEXT_PUBLIC_PRIVY_APP_ID=...
 ```
 
 ### **3. Blockchain Service Integration**
