@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'motion/react';
 import { Logo } from './ui/Logo';
-import { useWeb3Modal } from '@web3modal/wagmi/react';
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,7 +13,6 @@ export function Navigation() {
     damping: 30,
     restDelta: 0.001
   });
-  const { open } = useWeb3Modal();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -102,13 +100,7 @@ export function Navigation() {
 
           <div className="flex items-center gap-3">
             <motion.button
-              onClick={async () => {
-                try {
-                  await open();
-                } catch {
-                  window.location.href = '#pwa';
-                }
-              }}
+              onClick={() => { window.location.href = '#pwa' }}
               whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(249, 115, 22, 0.4)' }}
               whileTap={{ scale: 0.95 }}
               className="relative px-6 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white overflow-hidden group"
