@@ -7,23 +7,27 @@ import { base, baseSepolia } from 'viem/chains';
 import { PrivyProvider } from '@privy-io/react-auth';
 
 const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '';
+const hasProjectId = !!projectId;
+const privyAppId = process.env.NEXT_PUBLIC_PRIVY_APP_ID || '';
+const hasPrivy = !!privyAppId;
 
-createWeb3Modal({
-  wagmiConfig,
-  projectId,
-  chains: [baseSepolia, base]
-});
+if (hasProjectId) {
+  createWeb3Modal({
+    wagmiConfig,
+    projectId,
+    chains: [baseSepolia, base]
+  });
+}
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const wagmiTree = <WagmiProvider config={wagmiConfig}>{children}</WagmiProvider>;
+  if (!hasPrivy) return wagmiTree;
   return (
     <PrivyProvider
-      appId={process.env.NEXT_PUBLIC_PRIVY_APP_ID || ''}
-      config={{
-        loginMethods: ['email', 'wallet'],
-        embeddedWallets: { createOnLogin: 'all-users' }
-      }}
+      appId={privyAppId}
+      config={{ loginMethods: ['email', 'wallet'], embeddedWallets: { createOnLogin: 'all-users' } }}
     >
-      <WagmiProvider config={wagmiConfig}>{children}</WagmiProvider>
+      {wagmiTree}
     </PrivyProvider>
   );
 }

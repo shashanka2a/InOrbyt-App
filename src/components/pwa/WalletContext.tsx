@@ -41,8 +41,8 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   }, [connect, connectors]);
 
   const connectPrivy = useCallback(async () => {
-    // Privy connects via its own UI; for now, this is a no-op placeholder.
-    // You can import usePrivy and call login().
+    // Only allow if Privy env present; otherwise throw to let UI fallback
+    if (!process.env.NEXT_PUBLIC_PRIVY_APP_ID) throw new Error('Privy not configured');
     setWalletType('privy');
   }, []);
 
