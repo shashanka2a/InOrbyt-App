@@ -49,10 +49,10 @@ export function Navigation() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          isScrolled ? 'bg-[#0a0e1a]/95 backdrop-blur-xl border-b border-[#f9f4e1]/10 shadow-lg shadow-black/20' : 'bg-transparent'
+          isScrolled ? 'bg-[#0a0e1a]/95 backdrop-blur-xl border-b border-[#f9f4e1]/10 shadow-lg shadow-black/20' : 'bg-[#0a0e1a]/70 backdrop-blur-md'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4 flex items-center justify-between">
           <div className="flex items-center gap-12">
             <motion.a 
               href="#"
@@ -69,7 +69,7 @@ export function Navigation() {
               />
             </motion.a>
             
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-6">
               {navLinks.map((item) => {
                 const sectionId = item.toLowerCase().replace(/\s+/g, '-');
                 const isActive = activeSection === sectionId;
@@ -98,7 +98,7 @@ export function Navigation() {
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 md:gap-3">
             <motion.button
               onClick={() => { window.location.href = '#pwa' }}
               whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(249, 115, 22, 0.4)' }}

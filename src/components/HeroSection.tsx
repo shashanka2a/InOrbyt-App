@@ -22,7 +22,7 @@ export function HeroSection() {
   const rotateY = useTransform(x, [-300, 300], [-5, 5]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ backgroundColor: '#005257' }}>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-32 pb-12" style={{ backgroundColor: '#005257' }}>
       {/* Enhanced animated gradient glows */}
       <div className="absolute inset-0 overflow-hidden">
         <motion.div
@@ -90,7 +90,7 @@ export function HeroSection() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="font-lora text-[#f9f4e1] mb-6 leading-[1.15] relative"
           style={{ 
-            fontSize: '56px', 
+            fontSize: 'clamp(32px, 8vw, 56px)', 
             fontWeight: 700,
             textShadow: '0 0 40px rgba(249, 244, 225, 0.3)'
           }}
@@ -140,7 +140,7 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7 }}
           className="font-dm-sans text-[#f9f4e1]/80 mb-12 max-w-3xl mx-auto"
-          style={{ fontSize: '22px' }}
+          style={{ fontSize: 'clamp(14px, 3.5vw, 22px)' }}
         >
           Every creator and fan gets a built-in wallet — no crypto setup needed.
         </motion.p>
@@ -149,7 +149,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.9 }}
-          className="flex items-center justify-center gap-4 flex-wrap"
+          className="flex items-center justify-center gap-3 md:gap-4 flex-wrap"
         >
           <motion.a
             href="https://forms.inorbyt.io/hello"
@@ -160,8 +160,8 @@ export function HeroSection() {
               boxShadow: '0 20px 40px rgba(249, 115, 22, 0.4), 0 0 60px rgba(249, 115, 22, 0.2)'
             }}
             whileTap={{ scale: 0.95 }}
-            className="relative px-8 py-4 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white overflow-hidden group shadow-xl shadow-orange-500/30"
-            style={{ fontSize: '18px', fontWeight: 600 }}
+            className="relative px-6 md:px-8 py-3 md:py-4 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white overflow-hidden group shadow-xl shadow-orange-500/30"
+            style={{ fontSize: 'clamp(14px, 3.5vw, 18px)', fontWeight: 600 }}
           >
             <motion.span className="relative z-10 flex items-center gap-2">
               Join Early Access
@@ -197,8 +197,8 @@ export function HeroSection() {
               borderColor: 'rgba(249, 244, 225, 1)'
             }}
             whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 rounded-full border-2 border-[#f9f4e1]/50 text-[#f9f4e1] transition-all duration-300 backdrop-blur-sm"
-            style={{ fontSize: '18px', fontWeight: 600 }}
+            className="px-6 md:px-8 py-3 md:py-4 rounded-full border-2 border-[#f9f4e1]/50 text-[#f9f4e1] transition-all duration-300 backdrop-blur-sm"
+            style={{ fontSize: 'clamp(14px, 3.5vw, 18px)', fontWeight: 600 }}
           >
             View Demo
           </motion.button>
